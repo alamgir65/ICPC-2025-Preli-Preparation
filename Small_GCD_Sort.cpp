@@ -38,6 +38,8 @@ void solve(){
     for (auto u : v)
         cout << u.second<<" ";
     nl
+    /// hudai edi kore lav ache?
+    
 }
 love{
     Alamgir
