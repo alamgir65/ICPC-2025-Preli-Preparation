@@ -23,17 +23,18 @@
 #define fix(n, val) fixed << setprecision(n) << val
 #define Alamgir ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
 using namespace std;
+
 // Constants
 const long double pi = 3.141592653589793238;
 const ll MOD = 1e9 + 7;
 
-// checks
+// GCD, LCM, Prime checks
 ll gcd(ll a, ll b)
 {
     if (b == 0)
         return a;
     return gcd(b, a % b);
-} //__gcd
+}
 ll lcm(ll a, ll b) { return (a / gcd(a, b) * b); }
 bool isPrime(ll n)
 {
@@ -43,7 +44,7 @@ bool isPrime(ll n)
         return true;
     if (n % 2 == 0 || n % 3 == 0)
         return false;
-    for (int i = 5; i * i <= n; i = i + 6)
+    for (int i = 5; i * i <= n; i += 6)
         if (n % i == 0 || n % (i + 2) == 0)
             return false;
     return true;
@@ -60,22 +61,25 @@ void solve()
         cin >> x;
         v.pb({x, i});
     }
+
     boro(v);
+
     if (n == 1)
     {
         if (v[0].first == 0)
         {
-            out(0)
+            out(0);
         }
         else
         {
-            out("IMPOSSIBLE")
+            out("IMPOSSIBLE");
         }
         return;
     }
+
     vector<pii> ans;
 
-    for (int i = 0; i < n;i++)
+    for (int i = 0; i < n; i++)
     {
         for (int j = i + 1; j < n; j++)
         {
@@ -86,26 +90,30 @@ void solve()
                 v[j].first--;
             }
         }
+
+        // ✅ Corrected line: sort descending from index i+1 to end
+        sort(v.begin() + (i + 1), v.end(), greater<pii>());
     }
 
-    for(int i=0;i<n;i++){
-        cout<<v[i].first<<" ";
-        // if(v[i].first > 0){
-        //     out("IMPOSSIBLE")
-        //     return;
-        // }
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i].first > 0)
+        {
+            out("IMPOSSIBLE");
+            return;
+        }
     }
 
-    // out(ans.size()) 
-    // for (auto u : ans)
-    // {
-    //     out2(u.first, u.second)
-    // }
+    out(ans.size());
+    for (auto u : ans)
+        out2(u.first, u.second);
 }
+
 love
 {
-    Alamgir int t = 1;
-    // cin>>t;
+    Alamgir;
+    int t = 1;
+    // cin >> t;
     for (int i = 1; i <= t; i++)
     {
         solve();
