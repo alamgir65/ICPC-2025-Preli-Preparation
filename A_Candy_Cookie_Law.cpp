@@ -32,17 +32,15 @@ ll gcd(ll a, ll b){if (b == 0)return a;return gcd(b, a % b);} //__gcd
 ll lcm(ll a, ll b){return (a/gcd(a,b)*b);}
 bool isPrime(ll n){if(n<=1)return false;if(n<=3)return true;if(n%2==0||n%3==0)return false;for(int i=5;i*i<=n;i=i+6)if(n%i==0||n%(i+2)==0)return false;return true;}
 
-
 void solve(){
-    int a,b; cin>>a>>b;
-    if(a<b) swap(a,b);
-    if(a > 2*b || (a+b)%3 != 0) no
-    else yes
+    int a,b,c,d; cin>>a>>b>>c>>d;
+    if(c>=a && d<b) cyes
+    else cno
 }
 love{
     Alamgir
     int t=1; 
-    cin>>t;
+    // cin>>t;
     for(int i=1;i<=t;i++){
         solve();
     }

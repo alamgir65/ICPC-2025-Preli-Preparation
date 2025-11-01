@@ -32,17 +32,46 @@ ll gcd(ll a, ll b){if (b == 0)return a;return gcd(b, a % b);} //__gcd
 ll lcm(ll a, ll b){return (a/gcd(a,b)*b);}
 bool isPrime(ll n){if(n<=1)return false;if(n<=3)return true;if(n%2==0||n%3==0)return false;for(int i=5;i*i<=n;i=i+6)if(n%i==0||n%(i+2)==0)return false;return true;}
 
-
 void solve(){
-    int a,b; cin>>a>>b;
-    if(a<b) swap(a,b);
-    if(a > 2*b || (a+b)%3 != 0) no
-    else yes
+    ll n,k; cin>>n>>k;
+    vector<int> a(n+1,-1);
+    vii xx,yy;
+    int x=n-1,val=n,i=1;
+    vii v;
+    while(k>0){
+        if(k>=x){
+            a[i]=val;
+            xx.pb(val);
+            k -= x;
+        }else{
+            v.pb(val);
+            yy.pb(val);
+        }
+        val--;
+        i++;
+        x--;
+    }
+    // for(int i=1;i<=n;i++) cout<<a[i]<<" ";
+    // nl
+    for(int i=val;i>=1;i--) yy.pb(i);
+    choto(yy);
+    int j=0;
+    // for(int i=n;i>=1;i--){
+    //     if(a[i]==-1 && j<v.size()){
+    //         a[i]=v[j++];
+    //     }
+    // }
+    // for(int i=1;i<=n;i++) cout<<a[i]<<" ";
+    // nl
+
+    for(auto u:xx) cout<<u<<" ";
+    for(auto u:yy) cout<<u<<" ";
+    nl
 }
 love{
     Alamgir
     int t=1; 
-    cin>>t;
+    // cin>>t;
     for(int i=1;i<=t;i++){
         solve();
     }
