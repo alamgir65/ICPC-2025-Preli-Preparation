@@ -1,122 +1,55 @@
 #include <bits/stdc++.h>
-#define ll long long
-#define yes cout << "YES" << endl;
-#define no cout << "NO" << endl;
-#define cyes cout << "Yes" << endl;
-#define cno cout << "No" << endl;
-#define all(x) x.begin(), x.end()
-#define choto(x) sort((x).begin(), (x).end())
-#define boro(x) sort((x).rbegin(), (x).rend())
-#define nl cout << endl;
-#define endl '\n'
-#define love int main()
-#define vtr vector
-#define pii pair<int, int>
-#define out(x) cout << x << '\n';
-#define out2(x, y) cout << x << " " << y << '\n';
-#define vii vector<int>
-#define vll vector<ll>
-#define imax INT_MAX
-#define imin INT_MIN
-#define pb push_back
-#define vsum(x) accumulate((x).begin(), (x).end(), 0LL)
-#define fix(n, val) fixed << setprecision(n) << val
-#define Alamgir ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0);
 using namespace std;
+#define ll long long
+#define pii pair<int,int>
+#define out(x) cout << x << '\n'
+#define out2(x,y) cout << x << " " << y << '\n'
 
-// Constants
-const long double pi = 3.141592653589793238;
-const ll MOD = 1e9 + 7;
-
-// GCD, LCM, Prime checks
-ll gcd(ll a, ll b)
-{
-    if (b == 0)
-        return a;
-    return gcd(b, a % b);
-}
-ll lcm(ll a, ll b) { return (a / gcd(a, b) * b); }
-bool isPrime(ll n)
-{
-    if (n <= 1)
-        return false;
-    if (n <= 3)
-        return true;
-    if (n % 2 == 0 || n % 3 == 0)
-        return false;
-    for (int i = 5; i * i <= n; i += 6)
-        if (n % i == 0 || n % (i + 2) == 0)
-            return false;
-    return true;
-}
-
-void solve()
-{
+void solve() {
     int n;
     cin >> n;
-    vector<pii> v;
-    for (int i = 1; i <= n; i++)
-    {
-        int x;
-        cin >> x;
-        v.pb({x, i});
+    vector<pii> deg(n);
+    for (int i = 0; i < n; i++) {
+        cin >> deg[i].first;
+        deg[i].second = i + 1;
     }
 
-    boro(v);
-
-    if (n == 1)
-    {
-        if (v[0].first == 0)
-        {
-            out(0);
-        }
-        else
-        {
-            out("IMPOSSIBLE");
-        }
-        return;
-    }
+    // Max heap based on degree
+    priority_queue<pii> pq;
+    for (auto &p : deg)
+        if (p.first > 0)
+            pq.push(p);
 
     vector<pii> ans;
 
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = i + 1; j < n; j++)
-        {
-            if (v[i].first && v[j].first)
-            {
-                ans.pb({v[i].second, v[j].second});
-                v[i].first--;
-                v[j].first--;
-            }
-        }
-
-        // ✅ Corrected line: sort descending from index i+1 to end
-        sort(v.begin() + (i + 1), v.end(), greater<pii>());
-    }
-
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i].first > 0)
-        {
+    while (!pq.empty()) {
+        auto [d, i] = pq.top(); pq.pop();
+        if (d > pq.size()) {
             out("IMPOSSIBLE");
             return;
         }
+
+        vector<pii> temp;
+        for (int k = 0; k < d; k++) {
+            auto [d2, j] = pq.top(); pq.pop();
+            ans.push_back({i, j});
+            if (--d2 > 0)
+                temp.push_back({d2, j});
+        }
+        for (auto &p : temp)
+            pq.push(p);
     }
 
     out(ans.size());
-    for (auto u : ans)
-        out2(u.first, u.second);
+    for (auto &p : ans)
+        out2(p.first, p.second);
 }
 
-love
-{
-    Alamgir;
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     int t = 1;
     // cin >> t;
-    for (int i = 1; i <= t; i++)
-    {
-        solve();
-    }
-    return 0;
+    while (t--) solve();
 }
