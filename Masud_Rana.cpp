@@ -14,7 +14,7 @@
 #define pii pair<int,int>
 #define out(x) cout << x << '\n';
 #define out2(x,y) cout << x << " " << y << '\n';
-#define vii vector<int>
+#define vii vector<int> 
 #define vll vector<ll>
 #define imax INT_MAX
 #define imin INT_MIN
@@ -23,57 +23,55 @@
 #define fix(n, val) fixed << setprecision(n) << val
 #define Alamgir ios_base::sync_with_stdio(false), cin.tie(0),cout.tie(0);
 using namespace std;
-
 //Constants
 const long double pi= 3.141592653589793238;
 const ll MOD=1e9+7;
+const int N=2e5+7;
 
 vector<vii> adj;
+int n,k;
 
-// DFS to calculate subtree size rooted at node u, with parent p
-int dfs(int u, int parent) {
-    int size = 1; // count the node itself
-    
+//checks
+ll gcd(ll a, ll b){if (b == 0)return a;return gcd(b, a % b);} //__gcd 
+ll lcm(ll a, ll b){return (a/gcd(a,b)*b);}
+bool isPrime(ll n){if(n<=1)return false;if(n<=3)return true;if(n%2==0||n%3==0)return false;for(int i=5;i*i<=n;i=i+6)if(n%i==0||n%(i+2)==0)return false;return true;}
+
+int dfs(int u, int p) {
+    int size = 1;
     for(int v : adj[u]) {
-        if(v != parent) {
+        if(v != p) {
             size += dfs(v, u);
         }
     }
-    
     return size;
 }
 
-void solve(int tc) {
-    int n, k;
-    cin >> n >> k;
-    
+void solve(){
+    cin>>n>>k;
+
     adj.assign(n + 1, vii());
-    
-    for(int i = 0; i < n - 1; i++) {
-        int u, v;
-        cin >> u >> v;
+
+    for(int i=0;i<n-1;i++){
+        int u,v; cin>>u>>v;
         adj[u].pb(v);
         adj[v].pb(u);
     }
-    
-    // Find the maximum subtree size among K's direct children
-    int maxSaved = 0;
-    
-    for(int child : adj[k]) {
-        // Calculate subtree size of this child (excluding K)
-        int saved = dfs(child, k);
-        maxSaved = max(maxSaved, saved);
-    }
-    
-    cout << "Case " << tc << ": " << maxSaved << endl;
-}
 
-love {
-    Alamgir
-    int t;
-    cin >> t;
-    for(int i = 1; i <= t; i++) {
-        solve(i);
+    int ans = 0;
+    for(auto x:adj[k]){
+        int tmp = dfs(x,k);
+        ans = max(ans,tmp);
     }
-    return 0;
+    out(ans)
+
+}
+love{
+    Alamgir
+    int t=1; 
+    cin>>t;
+    for(int i=1;i<=t;i++){
+        cout<<"Case "<<i<<": ";
+        solve();
+    }
+    return 0;    
 }
