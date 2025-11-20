@@ -33,56 +33,19 @@ ll lcm(ll a, ll b){return (a/gcd(a,b)*b);}
 bool isPrime(ll n){if(n<=1)return false;if(n<=3)return true;if(n%2==0||n%3==0)return false;for(int i=5;i*i<=n;i=i+6)if(n%i==0||n%(i+2)==0)return false;return true;}
 
 void solve(){
-    
     int n; cin>>n;
-    vii a(n), b(n);
-    int aji_one=0,aji_opp =0,mai_one = 0,mai_opp=0;
+    vii a(n),b(n);
+    int aji=0,mai=0;
+    for(int i=0;i<n;i++) cin>>a[i], aji ^= a[i];/*  */
+    for(int i=0;i<n;i++) cin>>b[i], mai ^= b[i];/*  */
     for(int i=0;i<n;i++){
-        cin>>a[i];
-        if(a[i]==1) aji_one++;
+        if(i%2==0){
+            if(aji<mai && a[i]!=b[i]) swap(aji,mai);
+        }else  if(i%2 && mai<aji && a[i]!=b[i]) swap(aji,mai);
     }
-    for(int i=0;i<n;i++){
-        cin>>b[i];
-        if(b[i]==1) mai_one++;
-    }
-    for(int i=0;i<n;i++){
-        if(i%2==1 && a[i]!=b[i]) mai_opp++;
-        else if(i%2 == 0 && a[i]!=b[i]) aji_opp++;
-    }
-
-    int aji=0,sai=0;
-    for(int i=0;i<n;i++){
-        aji ^= a[i];
-        sai ^= b[i];
-        if(i%2==0 && aji==0 && a[i]!=b[i]){
-            aji = 1;
-        }else if(i%2==1 && sai==0 && a[i]!=b[i]){
-            sai = 1;
-        }
-    }
-
-    if(aji > sai) out("Ajisai")
-    else if(sai > aji) out("Mai")
+    if(aji > mai) out("Ajisai")
+    else if(mai > aji) out("Mai")
     else out("Tie")
-
-    // if(aji_one%2 == mai_one%2){
-    //     if(aji_opp > mai_opp){
-    //         out("Ajisai")
-    //     }else if(mai_opp > aji_opp){
-    //         out("Mai")
-    //     }else out("Tie")
-    // }
-    // else{
-    //     if(((aji_one%2)+aji_opp) == ((mai_one%2)+mai_opp)){
-    //         if(aji_one%2) out("Ajisai")
-    //         else if(mai_one%2) out("Mai")
-    //         else out("Tie")
-    //     }
-    //     else if(((aji_one%2)+aji_opp) > ((mai_one%2)+mai_opp)) out("Ajisai")
-    //     else if(((aji_one%2)+aji_opp) < ((mai_one%2)+mai_opp)) out("Mai")
-    //     else out("Tie")
-    // }
-
 }
 love{
     Alamgir
