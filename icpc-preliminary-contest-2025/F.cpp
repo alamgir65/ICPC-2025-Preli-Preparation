@@ -1,64 +1,68 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #define ll long long
-#define yes cout<<"YES"<<endl;
-#define no cout<<"NO"<<endl;
-#define cyes cout<<"Yes"<<endl;
-#define cno cout<<"No"<<endl;
-#define all(x) x.begin(), x.end()
-#define choto(x) sort((x).begin(), (x).end())
-#define boro(x) sort((x).rbegin(), (x).rend())
-#define nl cout<<endl;
-#define endl '\n'
-#define love int main()
-#define vtr vector
-#define pii pair<int,int>
-#define out(x) cout << x << '\n';
-#define out2(x,y) cout << x << " " << y << '\n';
-#define vii vector<int> 
-#define vll vector<ll>
-#define imax INT_MAX
-#define imin INT_MIN
-#define pb push_back
-#define vsum(x) accumulate((x).begin(), (x).end(), 0LL)
-#define fix(n, val) fixed << setprecision(n) << val
-#define Alamgir ios_base::sync_with_stdio(false), cin.tie(0),cout.tie(0);
 using namespace std;
-//Constants
-const long double pi= 3.141592653589793238;
-const ll MOD= 998244353;
 
-//checks
-ll gcd(ll a, ll b){if (b == 0)return a;return gcd(b, a % b);} //__gcd 
-ll lcm(ll a, ll b){return (a/gcd(a,b)*b);}
-bool isPrime(ll n){if(n<=1)return false;if(n<=3)return true;if(n%2==0||n%3==0)return false;for(int i=5;i*i<=n;i=i+6)if(n%i==0||n%(i+2)==0)return false;return true;}
+static const ll mod = 998244353;
 
-void solve(){
-    int n; 
-    cin >> n;
-
-    string s; 
-    cin >> s;
-
-    int mx = count(s.begin(), s.end(), '1');
-    int mn = n - mx;
-
-    if (mn < mx) swap(mn, mx);
-
-    ll ans = 1;
-    ll base = mx % MOD;
-
-    for(int i = 1; i <= mn; i++){
-        ans = (ans * base) % MOD;
+ll fp(ll a, ll b)
+{
+    ll r = 1 % mod;
+    while (b)
+    {
+        if (b & 1)
+            r = r * a % mod;
+        a = a * a % mod;
+        b >>= 1;
     }
-
-    cout << ans << endl;
+    return r;
 }
-love{
-    Alamgir
-    int t=1; 
-    cin>>t;
-    for(int i=1;i<=t;i++){
-        solve();
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    cin >> t;
+    vector<pair<int, string>> v(t);
+    int mx = 0;
+
+    for (int i = 0; i < t; i++)
+    {
+        cin >> v[i].first >> v[i].second;
+        mx = max(mx, v[i].first);
     }
-    return 0;    
+
+    vector<ll> f(mx + 1), inv(mx + 1);
+    f[0] = 1;
+
+    for (int i = 1; i <= mx; i++)
+        f[i] = f[i - 1] * i % mod;
+    inv[mx] = fp(f[mx], mod - 2);
+
+    for (int i = mx; i > 0; i--)
+        inv[i - 1] = inv[i] * i % mod;
+
+    auto C = [&](int n, int k)
+    {
+        if (k < 0 || k > n)
+            return 0ll;
+        return f[n] * inv[k] % mod * inv[n - k] % mod;
+    };
+
+    for (auto &p : v)
+    {
+        int n = p.first;
+        string &s = p.second;
+        int o = 0;
+        for (char c : s)
+            o += c == '1';
+        if (o < 2)
+        {
+            cout << 0 << "\n";
+            continue;
+        }
+        cout << (C(o, 2) * C(n, o + 1) % mod) << "\n";
+    }
+    return 0;
 }
