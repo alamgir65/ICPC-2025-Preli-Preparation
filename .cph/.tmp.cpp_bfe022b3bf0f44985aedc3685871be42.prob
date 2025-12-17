@@ -1,1 +1,1 @@
-{"name":"Local: tmp","url":"d:\\ICPC-2025-Preli-Preparation\\tmp.cpp","tests":[{"id":1761416597957,"input":"16","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\ICPC-2025-Preli-Preparation\\tmp.cpp","group":"local","local":true}
+{"name":"Local: tmp","url":"d:\\ICPC-2025-Preli-Preparation\\tmp.cpp","tests":[{"id":1761416597957,"input":"1\n4\n20 1 9 4","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\ICPC-2025-Preli-Preparation\\tmp.cpp","group":"local","local":true}
